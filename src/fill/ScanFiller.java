@@ -56,7 +56,7 @@ public class ScanFiller {
             Collections.sort(pruseciky);
                 int i = 1;
                 while (i <= pruseciky.size()){
-                    for (int x = pruseciky.get(i);x <= pruseciky.get(i);x++){
+                    for (int x = pruseciky.get(i-1);x <= pruseciky.get(i);x++){
                         raster.setPixel(x,y, Color.RED.getRGB());
                     }
                     i+=2;
