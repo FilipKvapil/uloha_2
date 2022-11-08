@@ -5,9 +5,10 @@ import model.Polygon;
 
 public class PolygonRasterizer {
 
-    FilledLineRasterizer filledLineRasterizer;
-    public PolygonRasterizer(FilledLineRasterizer filledLineRasterizer) {
-        this.filledLineRasterizer = filledLineRasterizer;
+    public LineRasterizerGraphics lineRasterizer;
+
+    public PolygonRasterizer(LineRasterizerGraphics filledLineRasterizer) {
+        this.lineRasterizer = filledLineRasterizer;
     }
 
     public void drawPolygon(Polygon polygon){
@@ -19,7 +20,8 @@ public class PolygonRasterizer {
             Point point1 = polygon.getPoint(i);
             Point point2;
             if((i+1)!=polygon.getCount()){point2 = polygon.getPoint(i+1);} else{point2 = polygon.getPoint(0);}
-            filledLineRasterizer.drawLine(point1,point2);
+            lineRasterizer.drawLine(point1,point2);
         }
+
     }
 }
