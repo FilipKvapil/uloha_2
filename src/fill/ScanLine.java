@@ -4,7 +4,6 @@ import model.Line;
 import model.Polygon;
 import model.Point;
 import rasterize.FilledLineRasterizer;
-import rasterize.Raster;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +19,8 @@ public class ScanLine {
         this.lineRasterizer = lineRasterizer;
     }
 
-    public void run() {
+    public void fill() {
+        if (lines.getList().size()<=2) return;
         //deklarace a inicializace pomocného Polygonu
         Polygon pomLines = new Polygon();
         //Max,Min Y

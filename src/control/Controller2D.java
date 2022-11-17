@@ -49,7 +49,7 @@ public class Controller2D implements Controller {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     polygon.addPoint(new Point(e.getX(),e.getY()));
                     hardClear();
-                    if(polygon.getCount()>2) new ScanLine(polygon, lineRasterizer).run();
+                    if(polygon.getCount()>2) new ScanLine(polygon, lineRasterizer).fill();
                     polygonRasterizer.drawPolygon(polygon);
                     if (polygon.getCount() == 2){
                         hardClear();
