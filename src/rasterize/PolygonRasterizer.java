@@ -3,6 +3,8 @@ package rasterize;
 import model.Point;
 import model.Polygon;
 
+import java.awt.*;
+
 public class PolygonRasterizer {
 
     public FilledLineRasterizer lineRasterizer;
@@ -23,5 +25,9 @@ public class PolygonRasterizer {
             lineRasterizer.drawLine(point1,point2);
         }
 
+    }
+
+    public void setColor (Color color){
+        lineRasterizer.setColor(color.getRGB());
     }
 }
