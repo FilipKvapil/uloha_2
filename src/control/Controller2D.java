@@ -1,6 +1,6 @@
 package control;
 
-import fill.ScanFiller;
+import fill.ScanLine;
 import fill.SeedFiller;
 import model.Point;
 import model.Polygon;
@@ -15,11 +15,10 @@ public class Controller2D implements Controller {
     private final Panel panel;
 
     private int x,y;
-    private LineRasterizerGraphics lineRasterizer;
+    private FilledLineRasterizer lineRasterizer;
     private final Polygon polygon = new Polygon();
     private PolygonRasterizer polygonRasterizer;
     private SeedFiller seedFiller;
-    private ScanFiller scanFiller;
 
     public Controller2D(Panel panel) {
         this.panel = panel;
@@ -28,33 +27,34 @@ public class Controller2D implements Controller {
     }
 
     public void initObjects(Raster raster) {
-        lineRasterizer = new LineRasterizerGraphics(raster);
+        lineRasterizer = new FilledLineRasterizer(raster);
         polygonRasterizer = new PolygonRasterizer(lineRasterizer);
         seedFiller = new SeedFiller(raster);
-        scanFiller = new ScanFiller(raster);
+        polygonRasterizer.drawPolygon(polygon);
      }
 
     @Override
     public void initListeners(Panel panel) {
         panel.addMouseListener(new MouseAdapter() {
 
-            //Stisknutí tlačítka myši
+           /* //Stisknutí tlačítka myši
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1 && polygon.getCount() == 0)
                     polygon.addPoint(new Point(e.getX(), e.getY()));
-            }
+            }*/
             //Uvolnění tlačítka myši
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     polygon.addPoint(new Point(e.getX(),e.getY()));
                     hardClear();
+                    if(polygon.getCount()>2) new ScanLine(polygon, lineRasterizer).run();
                     polygonRasterizer.drawPolygon(polygon);
-                    scanFiller.scanLine(polygon);
                     if (polygon.getCount() == 2){
                         hardClear();
-                        lineRasterizer.drawLine(polygon.getPoint(polygon.getCount()-2),new Point(e.getX(),e.getY()));}
+                        lineRasterizer.drawLine(polygon.getPoint(polygon.getCount()-2),new Point(e.getX(),e.getY()));
+                    }
                     panel.repaint();
                 }
                 //seedFiller

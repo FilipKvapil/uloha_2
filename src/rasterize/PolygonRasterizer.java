@@ -5,9 +5,9 @@ import model.Polygon;
 
 public class PolygonRasterizer {
 
-    public LineRasterizerGraphics lineRasterizer;
+    public FilledLineRasterizer lineRasterizer;
 
-    public PolygonRasterizer(LineRasterizerGraphics filledLineRasterizer) {
+    public PolygonRasterizer(FilledLineRasterizer filledLineRasterizer) {
         this.lineRasterizer = filledLineRasterizer;
     }
 
