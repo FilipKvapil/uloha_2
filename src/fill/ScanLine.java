@@ -1,5 +1,6 @@
 package fill;
 
+import model.Edge;
 import model.Line;
 import model.Polygon;
 import model.Point;
@@ -11,51 +12,49 @@ import java.util.List;
 
 public class ScanLine {
 
-    private final Polygon lines;
+    private final Polygon enges;
     private final FilledLineRasterizer lineRasterizer;
 
-    public ScanLine(Polygon lines, FilledLineRasterizer lineRasterizer) {
-        this.lines = lines;
+    public ScanLine(Polygon enges, FilledLineRasterizer lineRasterizer) {
+        this.enges = enges;
         this.lineRasterizer = lineRasterizer;
     }
 
     public void fill() {
-        if (lines.getList().size()<=2) return;
+        if (enges.getList().size()<=2) return;
         //deklarace a inicializace pomocného Polygonu
         Polygon pomLines = new Polygon();
         //Max,Min Y
         Integer yMin = null;
         Integer yMax = null;
-        //Pro všechny Line v lines
-        for (Line line : lines.getLines()) {
+        //Pro všechny Line v enges
+        for (Edge edge : enges.getEdge()) {
             //vyřazení horizontálních
-            if (line.getY1() != line.getY2()) {
+            if (edge.getY1() != edge.getY2()) {
                 //určení horního a dolního bodu
-                if (line.getY1() > line.getY2()) {
-                    pomLines.addPoint(new Point(line.getX1(),line.getY1()));
-                    pomLines.addPoint(new Point(line.getX2(),line.getY2()));
+                if (edge.getY1() > edge.getY2()) {
+                    pomLines.addPoint(new Point(edge.getX1(),edge.getY1()));
+                    pomLines.addPoint(new Point(edge.getX2(),edge.getY2()));
                 } else {
-                    pomLines.addPoint(new Point(line.getX2(),line.getY2()));
-                    pomLines.addPoint(new Point(line.getX1(),line.getY1()));
+                    pomLines.addPoint(new Point(edge.getX2(),edge.getY2()));
+                    pomLines.addPoint(new Point(edge.getX1(),edge.getY1()));
                 }
             }
             //Určení Max,Min Y
-            if (yMin == null) yMin = line.getY2();
-            if (yMax == null) yMax = line.getY1();
-            if (yMin > line.getY2()) yMin = line.getY2();
-            if (yMax < line.getY1()) yMax = line.getY1();
+            if (yMin == null) yMin = edge.getY2();
+            if (yMax == null) yMax = edge.getY1();
+            if (yMin > edge.getY2()) yMin = edge.getY2();
+            if (yMax < edge.getY1()) yMax = edge.getY1();
         }
         //Od minima po maximum vykresli Line
         try {
             for (int y = yMin + 1; y < yMax; y++) {
                 List<Integer> pruseciky = new ArrayList<>();
-                for (Line line : pomLines.getLines()) {
-                    //Je na  y na lines ?
-                    if (y <= line.getY1() && y >= line.getY2() && line.getY1() != line.getY2() && y <= (line.getY1() - 1) && y >= line.getY2()) {
-                        //vypočítej x pro y na lines
-                        float k = (line.getX1() - line.getX2()) / (float) (line.getY1() - line.getY2());
-                        float x = (line.getX1() - (line.getY1() - y) * k);
-                        pruseciky.add(Math.round(x));
+                for (Edge edge : pomLines.getEdge()) {
+                    //Je na  y na enges ?
+                    if (edge.inside(y)) {
+                        //vypočítej x pro y na enges
+                        pruseciky.add(edge.intersection(y));
                     }
                 }
                 //srovnej x
@@ -64,8 +63,8 @@ public class ScanLine {
                 for (int i = 0; i < pruseciky.size(); i += 2) {
                     if (pruseciky.size() > i + 1) {
                         lineRasterizer.drawLine(new Point(pruseciky.get(i), y), new Point(pruseciky.get(i + 1), y));
-                        for (Line usecka : lines.getLines()) {
-                            lineRasterizer.drawLine(usecka);
+                        for (Edge usecka : enges.getEdge()) {
+                            lineRasterizer.drawLine(usecka.getX1(),usecka.getY1(),usecka.getX2(),usecka.getY2());
                         }
                     }
                 }

@@ -117,9 +117,9 @@ public class Controller2D implements Controller {
     }
     private void hardClear() {
         panel.clear();
-        polygonRasterizer.setColor(Color.BLUE);
-        polygonRasterizer.drawPolygon(polygon2);
-        polygonRasterizer.setColor(Color.RED);
+        lineRasterizer.setColor(Color.BLUE.getRGB());
+        new ScanLine(polygon2,lineRasterizer).fill();
+        lineRasterizer.setColor(Color.RED.getRGB());
         panel.repaint();
     }
 
