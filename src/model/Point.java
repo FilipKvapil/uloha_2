@@ -8,7 +8,7 @@ public class Point {
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        this.color = 0xFFFF0000 ;
+        this.color = 0xFFFF0000;
     }
 
     public int getX() {

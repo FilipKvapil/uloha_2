@@ -27,7 +27,7 @@ public class RasterBufferedImage implements Raster {
         graphics.drawImage(raster.img, 0, 0, null);
     }
 
-    public Graphics getGraphics(){
+    public Graphics getGraphics() {
         return img.getGraphics();
     }
 
@@ -47,6 +47,7 @@ public class RasterBufferedImage implements Raster {
         g.setColor(new Color(color));
         g.clearRect(0, 0, img.getWidth() - 1, img.getHeight() - 1);
     }
+
     @Override
     public void setClearColor(int color) {
         this.color = color;

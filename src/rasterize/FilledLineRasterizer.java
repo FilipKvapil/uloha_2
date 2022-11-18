@@ -6,7 +6,7 @@ import model.Point;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class FilledLineRasterizer extends LineRasterizer{
+public class FilledLineRasterizer extends LineRasterizer {
 
     private int color;
 
@@ -15,9 +15,9 @@ public class FilledLineRasterizer extends LineRasterizer{
         this.color = Color.RED.getRGB();
     }
     /*Byl použit triviální algoritmus.
-    *Nevýhoda: násobení a sčítání v plovoucí řádové čárce je neefektivní
-    *Výhoda: postup použitelný i pro složitější křivky
-    * */
+     *Nevýhoda: násobení a sčítání v plovoucí řádové čárce je neefektivní
+     *Výhoda: postup použitelný i pro složitější křivky
+     * */
 
     public void drawLine(Point p1, Point p2) {
 
@@ -42,12 +42,11 @@ public class FilledLineRasterizer extends LineRasterizer{
 
             //Vyhreslení bodu podle Y
             for (float i = x1; i <= x2; ++i) {
-                this.drawPixel((int)i,(int)y1);
+                this.drawPixel((int) i, (int) y1);
                 y1 += k;
             }
 
-        }
-        else {
+        } else {
             //Výměna koncových bodů
             if (y2 < y1) {
                 float pomocna = x1;
@@ -60,13 +59,14 @@ public class FilledLineRasterizer extends LineRasterizer{
             }
 
             float k = (x2 - x1) / (y2 - y1);
-                //Vyhreslení bodu podle X
+            //Vyhreslení bodu podle X
             for (float i = y1; i <= y2; ++i) {
-                this.drawPixel((int)x1, (int)i);
+                this.drawPixel((int) x1, (int) i);
                 x1 += k;
             }
         }
     }
+
     public void drawLine(Line line) {
 
         float x1 = line.getX1();
@@ -90,12 +90,11 @@ public class FilledLineRasterizer extends LineRasterizer{
 
             //Vyhreslení bodu podle Y
             for (float i = x1; i <= x2; ++i) {
-                this.drawPixel((int)i,(int)y1);
+                this.drawPixel((int) i, (int) y1);
                 y1 += k;
             }
 
-        }
-        else {
+        } else {
             //Výměna koncových bodů
             if (y2 < y1) {
                 float pomocna = x1;
@@ -110,12 +109,13 @@ public class FilledLineRasterizer extends LineRasterizer{
             float k = (x2 - x1) / (y2 - y1);
             //Vyhreslení bodu podle X
             for (float i = y1; i <= y2; ++i) {
-                this.drawPixel((int)x1, (int)i);
+                this.drawPixel((int) x1, (int) i);
                 x1 += k;
             }
         }
     }
-    public void drawLine(float x1,float y1, float x2, float y2) {
+
+    public void drawLine(float x1, float y1, float x2, float y2) {
 
         //Určení řídící osy
         if (Math.abs(y2 - y1) < Math.abs(x2 - x1)) {
@@ -134,12 +134,11 @@ public class FilledLineRasterizer extends LineRasterizer{
 
             //Vyhreslení bodu podle Y
             for (float i = x1; i <= x2; ++i) {
-                this.drawPixel((int)i,(int)y1);
+                this.drawPixel((int) i, (int) y1);
                 y1 += k;
             }
 
-        }
-        else {
+        } else {
             //Výměna koncových bodů
             if (y2 < y1) {
                 float pomocna = x1;
@@ -154,17 +153,19 @@ public class FilledLineRasterizer extends LineRasterizer{
             float k = (x2 - x1) / (y2 - y1);
             //Vyhreslení bodu podle X
             for (float i = y1; i <= y2; ++i) {
-                this.drawPixel((int)x1, (int)i);
+                this.drawPixel((int) x1, (int) i);
                 x1 += k;
             }
         }
     }
+
     private void drawPixel(final int x, final int y) {
         //Blokace vykreslení mimo plochu
         if (x >= 0 && x < this.raster.getWidth() && y >= 0 && y < this.raster.getHeight()) {
             raster.setPixel(x, y, this.color);
         }
     }
+
     public void setColor(final int color) {
         this.color = color;
     }

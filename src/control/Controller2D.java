@@ -59,8 +59,8 @@ public class Controller2D implements Controller {
                     }
                 }
                 //seedFiller
-                if (e.getButton() == MouseEvent.BUTTON3 &&polygon.getCount() >= 3){
-                    seedFiller.fill(e.getX(), e.getY(), Color.GREEN.getRGB(),Color.BLACK.getRGB());
+                if (e.getButton() == MouseEvent.BUTTON3){
+                    seedFiller.fill(e.getX(), e.getY(), Color.GREEN.getRGB(),panel.getRaster().getPixel(e.getX(), e.getY()));
                 }
             }
         });
@@ -69,10 +69,10 @@ public class Controller2D implements Controller {
             //Stisknutí tlačítka myši a přetažení
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (polygon.getCount()<=1){
+                if (polygon.getCount()<=1 && (e.getButton() == MouseEvent.BUTTON1)){
                     if(polygon.getCount()==0) polygon.addPoint(new Point(e.getX(), e.getY()));
                     drawLine(polygon.getPoint(0),new Point(e.getX(),e.getY()));
-                } else {
+                } else if(e.getButton() == MouseEvent.BUTTON1){
                     Polygon polygon1 = new Polygon();
                     polygon1.setList(polygon.getList());
                     polygon1.addPoint(new Point(e.getX(),e.getY()));

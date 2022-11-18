@@ -33,10 +33,10 @@ public class Panel extends JPanel {
         raster.repaint(g);
     }
 
-    public void resize(){
-        if (this.getWidth()<1 || this.getHeight()<1)
+    public void resize() {
+        if (this.getWidth() < 1 || this.getHeight() < 1)
             return;
-        if (this.getWidth()<=raster.getWidth() && this.getHeight()<=raster.getHeight()) //no resize if new is smaller
+        if (this.getWidth() <= raster.getWidth() && this.getHeight() <= raster.getHeight()) //no resize if new is smaller
             return;
         RasterBufferedImage newRaster = new RasterBufferedImage(this.getWidth(), this.getHeight());
 
